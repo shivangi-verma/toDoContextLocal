@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>To Do List</title>
+  </head>
+
+  <body class="bg-black h-screen w-screen">
+    <div class="main flex flex-col justify-between h-full w-full">
+      <!-- Heading -->
+      <div
+        class="heading font-[Work_Sans] font-medium text-nowrap text-[#272c34] leading-[0.9] tracking-[-0.2rem] sm:tracking-[-0.6rem] text-7xl sm:text-7xl md:text-8xl lg:text-[10rem] xl:text-[14rem] m-2 flex justify-center select-none"
+      >
+        Forward List
+      </div>
+
+      <div class="center-container flex flex-col justify-center items-center">
+        <!-- Input + Button Section -->
+        <div class="todoInput flex flex-row justify-center gap-4 w-xl">
+          <input
+            id="inputVal"
+            class="p-2 ml-0 bg-[#272c34] border-[#272c34] text-white placeholder:text-gray-300 focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:bg-[#373e48] px-4 m-2 mr-0 rounded-lg w-full"
+            placeholder="To Do Item..."
+          />
+
+          <button
+            id="addBtn"
+            class="border-none bg-white font-black px-4 p-2 m-2 hover:bg-gray-200 cursor-pointer rounded-lg ml-0 mr-0"
+            onclick="btnHandler()"
+            value=""
+          >
+            Add
+          </button>
+        </div>
+        <div id="output" class="flex flex-col justify-center mt-2 mb-2 w-xl">
+          <div class="flex flex-row justify-center w-full">
+            <!-- <div class="bg-pink-700 p-2 text-white rounded-l-lg w-full">
+              todo item
+            </div> 
+            <button
+              class="border-r-2 p-2 bg-white font-medium hover:bg-gray-700 hover:text-white"
+            >
+              Edit
+            </button> 
+            <button
+              class="rounded-r-lg p-2 bg-white font-medium hover:bg-gray-700 hover:text-white"
+            >
+              Delete
+            </button> -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div
+        class="footer flex justify-center text-white font-[DM_Sans] m-3 text-md sm:text-md md:text-xl lg:text-2xl xl:text-2xl hover:text-amber-100 cursor-pointer select-none"
+      >
+        Made by Shivangi
+      </div>
+    </div>
+
+    <script>
+      let listItems = [];
+
+      function btnHandler() {
+        let inputText = document.getElementById("inputVal").value;
+        if (inputText === "") return;
+
+        console.log(inputText);
+        console.log("add btn clicked");
+
+        listItems.push(inputText);
+
+        console.log(listItems);
+        document.getElementById("inputVal").value = "";
+
+        let listContainer = document.createElement("div");
+
+        listContainer.classList.add(
+          "flex",
+          "flex-row",
+          "justify-center",
+          "w-full",
+          "mt-2",
+          "mb-2"
+        );
+
+        let newPara = document.createElement("p");
+        newPara.classList.add(
+          "bg-pink-700",
+          "p-2",
+          "text-white",
+          "rounded-l-lg",
+          "w-full"
+        );
+
+        let editBtn = document.createElement("button");
+        editBtn.classList.add(
+          "border-r-2",
+          "p-2",
+          "bg-pink-200",
+          "font-medium",
+          "hover:bg-gray-700",
+          "hover:text-white"
+        );
+        editBtn.textContent = "Edit";
+
+        editBtn.addEventListener("click", () => {
+          console.log("edit clicked");
+          //   console.log(
+          //     "  newDelBtn.parentElement.children[0].textContent",
+          //     editBtn.parentElement.children[0].textContent
+          //   );
+          const itemText = editBtn.parentElement.children[0].textContent;
+          console.log(itemText);
+          const newInputCreated = document.createElement("input");
+          newInputCreated.classList.add(
+            "bg-gray-300",
+            "border",
+            "p-2",
+            "rounded-l-lg",
+            "w-full"
+          );
+          newInputCreated.value = itemText;
+          //   editBtn.parentElement.appendChild(newInputCreated);
+          editBtn.parentElement.insertBefore(
+            newInputCreated,
+            editBtn.parentElement.firstChild
+          );
+        //   editBtn.parentElement.remove(editBtn.previousElementSibling);
+        });
+
+        let newDelBtn = document.createElement("button");
+        newDelBtn.classList.add(
+          "rounded-r-lg",
+          "p-2",
+          "bg-pink-200",
+          "font-medium",
+          "hover:bg-gray-700",
+          "hover:text-white"
+        );
+        newDelBtn.textContent = "Delete";
+
+        newDelBtn.addEventListener("click", () => {
+          newDelBtn.parentElement.remove();
+          console.log("delete btn clicked");
+          console.log(
+            "  newDelBtn.parentElement.children[0].textContent",
+            newDelBtn.parentElement.children[0].textContent
+          );
+
+          listItems = listItems.filter(
+            (n) => n !== newDelBtn.parentElement.children[0].textContent
+          );
+          console.log("listItems : ", listItems);
+        });
+
+        listItems.map((i) => {
+          newPara.textContent = i;
+          document.getElementById("output").appendChild(listContainer);
+          listContainer.appendChild(newPara);
+          listContainer.appendChild(editBtn);
+          listContainer.appendChild(newDelBtn);
+        });
+      }
+    </script>
+  </body>
+</html>

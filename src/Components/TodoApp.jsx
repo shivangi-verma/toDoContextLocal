@@ -2,13 +2,28 @@ import { Input } from "@/components/ui/input";
 import { CircleFadingArrowUpIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
+import { useState } from "react";
 
 export default function TodoApp() {
+  const [text, setText] = useState("");
+  const [list, setList] = useState([]);
+
+  const addListItem = () => {
+    // setText((prev) => console.log(prev));
+    console.log(text);
+    setText("");
+
+    console.log(list);
+  };
+
+  const deleteListItem = () => {};
+
   return (
     <div className="h-screen w-screen flex flex-col justify-between bg-black">
       {/* Heading */}
       <div className="heading text-center cursor-default">
         <span
+          style={{ userSelect: "none" }}
           className="
             font-[Work_Sans]
             font-medium
@@ -18,7 +33,6 @@ export default function TodoApp() {
             tracking-[-0.3rem]
             sm:tracking-[-0.6rem]
             m-2
-
             text-7xl
             sm:text-7xl
             md:text-8xl
@@ -53,13 +67,18 @@ export default function TodoApp() {
               focus-visible:ring-gray-500
               focus-visible:bg-[#373e48]
             "
-            placeholder="What do I need to do next..."
+            placeholder="To Do Item..."
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
           />
 
           <motion.div whileHover={{ scale: 1 }} whileTap={{ scale: 0.9 }}>
             <Button
-              className="bg-gray-700 text-white border-none"
+              className="border-none"
               variant="outline"
+              onClick={addListItem}
             >
               Add
               <CircleFadingArrowUpIcon />
@@ -89,6 +108,7 @@ export default function TodoApp() {
             hover:text-amber-100
             cursor-pointer
           "
+          style={{ userSelect: "none" }}
         >
           Made by Shivangi
         </motion.div>
