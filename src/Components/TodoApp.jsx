@@ -9,14 +9,16 @@ export default function TodoApp() {
   const [list, setList] = useState([]);
 
   const addListItem = () => {
-    // setText((prev) => console.log(prev));
-    console.log(text);
+    setList((prev) => [...prev, text]);
     setText("");
-
-    console.log(list);
   };
 
-  const deleteListItem = () => {};
+  const deleteListItem = (index) => {
+    console.log("delete clicked");
+
+    // list.filter((i) => i !== index);
+    setList((prev) => prev.filter((item, i) => i !== index));
+  };
 
   return (
     <div className="h-screen w-screen flex flex-col justify-between bg-black">
@@ -45,7 +47,7 @@ export default function TodoApp() {
       </div>
 
       {/* Input + Add Button */}
-      <div className="content flex flex-row justify-center">
+      <div className="content flex flex-col items-center justify-center">
         <div
           className="
             todoInput
@@ -84,6 +86,28 @@ export default function TodoApp() {
               <CircleFadingArrowUpIcon />
             </Button>
           </motion.div>
+        </div>
+        {/* output */}
+        <div className="output  flex flex-col mt-2 w-xl ">
+          {list.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-row bg-white justify-between p-2 mt-2 rounded-2xl items-center px-3 "
+            >
+              <p className="text-black">{item}</p>
+
+              <Button
+                className={
+                  "hover:bg-gray-700 bg-gray-500 text-white hover:text-white"
+                }
+                size="sm"
+                variant="outline"
+                onClick={() => deleteListItem(index)}
+              >
+                Delete
+              </Button>
+            </div>
+          ))}
         </div>
       </div>
 
